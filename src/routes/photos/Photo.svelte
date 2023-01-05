@@ -1,6 +1,10 @@
 <script>
 	import Modal from './Modal.svelte';
-	export let imageUrl = 'fail.jpg';
+	let imageUrl = 'fail.jpg';
+
+	function hitLike() {
+		console.log('browser hit a like!');
+	}
 </script>
 
 <div class="col">
@@ -17,9 +21,9 @@
 				data-bs-toggle="modal"
 				data-bs-target="#close-up">View</button
 			>
-			<button type="button" class="btn btn-primary">❤️</button>
+			<button type="button" class="btn btn-primary" on:click={hitLike}>❤️</button>
 		</div>
 	</div>
 </div>
 
-<Modal hidden />
+<Modal />

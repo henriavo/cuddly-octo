@@ -1,10 +1,5 @@
 <script>
-	import * as bootstrap from 'bootstrap';
 	import Photo from './Photo.svelte';
-
-	export function hitLike() {
-		console.log('browser hit a like!');
-	}
 </script>
 
 <main>

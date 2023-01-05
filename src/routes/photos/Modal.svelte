@@ -1,8 +1,7 @@
 <script>
-	export let imageUrl = 'fail.jpg';
+	let imageUrl = 'fail.jpg';
 </script>
 
-<!-- The Modal -->
 <div
 	class="modal fade"
 	id="close-up"
