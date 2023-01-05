@@ -1,4 +1,5 @@
 <script>
+	import Modal from './Modal.svelte';
 	export let imageUrl = 'fail.jpg';
 </script>
 
@@ -20,3 +21,5 @@
 		</div>
 	</div>
 </div>
+
+<Modal hidden />
