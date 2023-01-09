@@ -1,6 +1,6 @@
 <script>
 	import Modal from './Modal.svelte';
-	let imageUrl = 'fail.jpg';
+	export let imageUrl = 'fail.jpg';
 
 	function hitLike() {
 		console.log('browser hit a like!');

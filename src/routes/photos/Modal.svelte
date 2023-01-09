@@ -1,5 +1,5 @@
 <script>
-	let imageUrl = 'fail.jpg';
+	export let imageUrl = 'fail.jpg';
 </script>
 
 <div
