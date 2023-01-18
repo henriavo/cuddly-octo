@@ -1,9 +1,12 @@
 <script>
 	import Modal from './Modal.svelte';
 	export let imageUrl = 'fail.jpg';
+	export let likeCount = 0;
 
 	function hitLike() {
 		console.log('browser hit a like!');
+		likeCount = likeCount + 1;
+		// run();
 	}
 </script>
 
@@ -17,11 +20,12 @@
 			</p>
 			<button
 				type="button"
-				class="btn btn-primary"
+				class="btn btn-primary btn-sm"
 				data-bs-toggle="modal"
 				data-bs-target="#close-up">View</button
 			>
-			<button type="button" class="btn btn-primary" on:click={hitLike}>❤️</button>
+			<button type="button" class="btn btn-primary btn-sm" on:click={hitLike}>❤️ {likeCount}</button
+			>
 		</div>
 	</div>
 </div>
