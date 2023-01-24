@@ -1,7 +1,7 @@
 <script>
 	import Modal from './Modal.svelte';
 	export let imageUrl = 'fail.jpg';
-	export let likeCount = 0;
+	export let likeCount = -1;
 
 	function hitLike() {
 		console.log('browser hit a like!');

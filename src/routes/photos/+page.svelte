@@ -1,5 +1,8 @@
 <script>
 	import Photo from './Photo.svelte';
+
+	/** @type {import('./$types').PageData} */
+	export let data;
 </script>
 
 <main>
@@ -19,9 +22,9 @@
 	<div class="album py-5 bg-light">
 		<div class="container">
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-				<Photo />
-				<Photo />
-				<Photo />
+				<Photo likeCount={data.data.count} />
+				<Photo likeCount={data.data.count} />
+				<Photo likeCount={986} />
 			</div>
 		</div>
 	</div>
