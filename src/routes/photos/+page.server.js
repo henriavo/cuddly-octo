@@ -11,17 +11,12 @@ async function run() {
 		console.log('connected successfully to mongo db');
 		const db = client.db(dbName);
 		const collection = db.collection('picture_likes');
-
-		const query = { _id: 7049 };
-		const options = {
-			projection: { _id: 0, count: 1 }
-		};
-
-		const result = await collection.findOne(query, options);
-
-		console.log('$$$ ' + result.count);
-
-		return result;
+		const cursor = collection.find().sort({ _id: 1 });
+		const rrr = await cursor.toArray();
+		rrr.forEach(function (item, index) {
+			console.log('=== ' + index + ' ' + item._id + ' ' + item.count);
+		});
+		return rrr;
 	} finally {
 		await client.close();
 	}
@@ -29,7 +24,6 @@ async function run() {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-	const result = run().catch(console.dir);
-	return { data: result };
-	// return { data: { count: 266 } };
+	const arrayresult = run().catch(console.dir);
+	return { data: arrayresult };
 }

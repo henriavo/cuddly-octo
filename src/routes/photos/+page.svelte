@@ -22,9 +22,10 @@
 	<div class="album py-5 bg-light">
 		<div class="container">
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-				<Photo likeCount={data.data.count} />
-				<Photo likeCount={data.data.count} />
-				<Photo likeCount={986} />
+				<!-- <Photo likeCount={data.map1.get(8052)} /> -->
+				<Photo likeCount={data.data[0].count} />
+				<Photo likeCount={data.data[1].count} />
+				<Photo likeCount={data.data[2].count} />
 			</div>
 		</div>
 	</div>
