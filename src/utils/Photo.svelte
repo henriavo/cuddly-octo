@@ -2,11 +2,25 @@
 	import Modal from './Modal.svelte';
 	export let imageUrl = 'fail.jpg';
 	export let likeCount = -1;
+	export let total = 'nothing';
 
 	function hitLike() {
 		console.log('browser hit a like!');
 		likeCount = likeCount + 1;
 		// run();
+		add();
+	}
+
+	async function add() {
+		const response = await fetch('/photos', {
+			method: 'POST',
+			body: 'here is my post request!',
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+
+		total = await response.json();
 	}
 </script>
 

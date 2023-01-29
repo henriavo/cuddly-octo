@@ -27,3 +27,12 @@ export async function load() {
 	const arrayresult = run().catch(console.dir);
 	return { data: arrayresult };
 }
+
+// <form> action handlers
+/** @type {import('./$types').Actions} */
+export const actions = {
+	default: async () => {
+		// TODO log the user in
+		console.log('hello world from sever side POST request handler.');
+	}
+};
