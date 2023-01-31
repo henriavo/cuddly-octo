@@ -14,6 +14,7 @@
 	}
 
 	async function addOneLike() {
+		//TODO: send current like count to server
 		let playerC = { name: 'curry', team: 'warriors', number: 30 };
 		const response = await fetch('/photos?count=69', {
 			method: 'POST',

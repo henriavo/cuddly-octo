@@ -13,6 +13,7 @@ async function run() {
 		console.log('connected successfully to mongo db');
 		const db = client.db(dbName);
 		const collection = db.collection('picture_likes');
+        //TODO: increment current like count by 1. update db for given _id
 		const cursor = collection.find().sort({ _id: 1 });
 		const rrr = await cursor.toArray();
 		rrr.forEach(function (item, index) {
