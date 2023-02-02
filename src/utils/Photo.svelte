@@ -1,24 +1,24 @@
 <script>
 	import Modal from './Modal.svelte';
 	export let imageUrl = 'fail.jpg';
-	export let likeCount = 'J';
+	export let likeCount = 0;
+	export let photoId;
 
 	let a = 3;
 	let b = 6;
 
 	function hitLike() {
 		console.log('browser hit a like!');
-		// likeCount = likeCount + 1;
-		// run();
+		likeCount = likeCount + 1;
 		addOneLike();
 	}
 
 	async function addOneLike() {
-		//TODO: send current like count and _id to server
-		let playerC = { name: 'curry', team: 'warriors', number: 30 };
-		const response = await fetch('/photos?count=69', {
+		//TODO: send current like count to server
+		let payload = { photoId, likeCount };
+		const response = await fetch('/photos', {
 			method: 'POST',
-			body: JSON.stringify(playerC),
+			body: JSON.stringify(payload),
 			headers: {
 				'content-type': 'application/json'
 			}
@@ -42,8 +42,7 @@
 				data-bs-toggle="modal"
 				data-bs-target="#close-up">View</button
 			>
-			<button type="button" class="btn btn-primary btn-sm" on:click={hitLike}
-				>❤️ {likeCount.name}</button
+			<button type="button" class="btn btn-primary btn-sm" on:click={hitLike}>❤️ {likeCount}</button
 			>
 		</div>
 	</div>
