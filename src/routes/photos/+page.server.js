@@ -8,13 +8,14 @@ const dbName = 'cuddly_octo';
 async function run() {
 	try {
 		await client.connect();
-		console.log('connected successfully to mongo db');
+		console.log('connected successfully to mongo db.');
 		const db = client.db(dbName);
 		const collection = db.collection('picture_likes');
 		const cursor = collection.find().sort({ _id: 1 });
 		const rrr = await cursor.toArray();
+		console.log('successful load from db. all records below:');
 		rrr.forEach(function (item, index) {
-			console.log('=== ' + index + ' ' + item._id + ' ' + item.count);
+			console.log('\t' + index + ' ' + item._id + ' ' + item.count);
 		});
 		return rrr;
 	} finally {
@@ -25,14 +26,5 @@ async function run() {
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
 	const arrayresult = run().catch(console.dir);
-	return { data: arrayresult };
+	return { likesArray: arrayresult };
 }
-
-// <form> action handlers
-/** @type {import('./$types').Actions} */
-export const actions = {
-	default: async () => {
-		// TODO log the user in
-		console.log('hello world from sever side POST request handler.');
-	}
-};

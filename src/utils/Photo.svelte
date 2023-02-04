@@ -4,17 +4,9 @@
 	export let likeCount = 0;
 	export let photoId;
 
-	let a = 3;
-	let b = 6;
-
-	function hitLike() {
+	async function addOneLike() {
 		console.log('browser hit a like!');
 		likeCount = likeCount + 1;
-		addOneLike();
-	}
-
-	async function addOneLike() {
-		//TODO: send current like count to server
 		let payload = { photoId, likeCount };
 		const response = await fetch('/photos', {
 			method: 'POST',
@@ -24,7 +16,7 @@
 			}
 		});
 
-		likeCount = await response.json(); // find response api to do response.toString()
+		likeCount = await response.json(); 
 	}
 </script>
 
@@ -42,7 +34,8 @@
 				data-bs-toggle="modal"
 				data-bs-target="#close-up">View</button
 			>
-			<button type="button" class="btn btn-primary btn-sm" on:click={hitLike}>❤️ {likeCount}</button
+			<button type="button" class="btn btn-primary btn-sm" on:click={addOneLike}
+				>❤️ {likeCount}</button
 			>
 		</div>
 	</div>
