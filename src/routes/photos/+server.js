@@ -1,8 +1,18 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb';
+import { USER_PASS } from '$env/static/private';
+import { USER_NAME } from '$env/static/private';
+import { MONGO_SERVER } from '$env/static/private';
 
-const url =
-	'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.1';
-const client = new MongoClient(url);
+const url = 'mongodb+srv://<<user>>:<<credential>>@<<server>>/?retryWrites=true&w=majority';
+const fullUrl = url
+	.replace('<<user>>', USER_NAME)
+	.replace('<<credential>>', USER_PASS)
+	.replace('<<server>>', MONGO_SERVER);
+const client = new MongoClient(fullUrl, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	serverApi: ServerApiVersion.v1
+});
 const dbName = 'cuddly_octo';
 
 async function run(data) {
