@@ -1,15 +1,16 @@
 <script>
 	export let imageUrl = 'fail.jpg';
+	export let modalId;
 </script>
 
 <div
 	class="modal fade"
-	id="close-up"
+	id={modalId}
 	tabindex="-1"
 	aria-labelledby="exampleModalLabel"
 	aria-hidden="true"
 >
-	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal-dialog modal-fullscreen-xl-down modal-dialog-centered modal-dialog-scrollable">
 		<div class="modal-content">
 			<!-- Modal Header -->
 			<div class="modal-header">

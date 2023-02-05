@@ -1,8 +1,8 @@
 <script>
-	import Modal from './Modal.svelte';
 	export let imageUrl = 'fail.jpg';
 	export let likeCount = 0;
 	export let photoId;
+	export let caption = 'hello world';
 
 	async function addOneLike() {
 		console.log('browser hit a like!');
@@ -16,7 +16,7 @@
 			}
 		});
 
-		likeCount = await response.json(); 
+		likeCount = await response.json();
 	}
 </script>
 
@@ -25,14 +25,13 @@
 		<img class="card-img-top" src={imageUrl} alt="" />
 		<div class="card-body">
 			<p class="card-text">
-				This is a wider card with supporting text below as a natural lead-in to additional content.
-				This content is a little bit longer.
+				{caption}
 			</p>
 			<button
 				type="button"
 				class="btn btn-primary btn-sm"
 				data-bs-toggle="modal"
-				data-bs-target="#close-up">View</button
+				data-bs-target="#{photoId}">View</button
 			>
 			<button type="button" class="btn btn-primary btn-sm" on:click={addOneLike}
 				>❤️ {likeCount}</button
@@ -40,5 +39,3 @@
 		</div>
 	</div>
 </div>
-
-<Modal />
