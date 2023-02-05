@@ -25,22 +25,22 @@
 				<Photo
 					photoId="1400"
 					likeCount={data.likesArray[0].count}
-					imageUrl="s3://henri-public-bucket/IMG_1400.JPG"
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1400.JPG"
 				/>
 				<Photo
 					photoId="1401"
 					likeCount={data.likesArray[1].count}
-					imageUrl="s3://henri-public-bucket/IMG_1401.JPG"
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1401.JPG"
 				/>
 				<Photo
 					photoId="1402"
 					likeCount={data.likesArray[2].count}
-					imageUrl="s3://henri-public-bucket/IMG_1402.JPG"
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1402.JPG"
 				/>
 				<Photo
 					photoId="1403"
 					likeCount={data.likesArray[2].count}
-					imageUrl="s3://henri-public-bucket/IMG_1403.JPG"
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1403.JPG"
 				/>
 			</div>
 		</div>
