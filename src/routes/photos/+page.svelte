@@ -30,10 +30,29 @@
 				/>
 				<Photo
 					photoId="1403"
-					likeCount={data.likesArray[2].count}
+					likeCount={data.likesArray[3].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1403.JPG"
 					caption="With her best buddy Benny"
 				/>
+				<Photo
+					photoId="1404"
+					likeCount={data.likesArray[4].count}
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1404.JPG"
+					caption="A good nap after a meal"
+				/>
+				<Photo
+					photoId="1405"
+					likeCount={data.likesArray[5].count}
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1405.JPG"
+					caption="Big smile after a meal"
+				/>
+				<Photo
+					photoId="1406"
+					likeCount={data.likesArray[6].count}
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1406.JPG"
+					caption="This lamb onesie is cute"
+				/>
+				<!-- TODO: handle null in likeArray -->
 			</div>
 		</div>
 	</div>
