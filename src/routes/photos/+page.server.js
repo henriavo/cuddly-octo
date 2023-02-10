@@ -28,6 +28,8 @@ async function run() {
 			console.log('\t' + index + ' ' + item._id + ' ' + item.count);
 		});
 		return rrr;
+	} catch (error) {
+		console.error(`ERRORRR: ${error}`)
 	} finally {
 		await client.close();
 	}
@@ -35,6 +37,6 @@ async function run() {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-	const arrayresult = run().catch(console.dir);
+	const arrayresult = run();
 	return { likesArray: arrayresult };
 }

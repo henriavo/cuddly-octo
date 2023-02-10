@@ -30,6 +30,8 @@ async function run(data) {
 		);
 
 		return Number(data.likeCount);
+	} catch (error) {
+		console.error(`ERRORRR: ${error}`);
 	} finally {
 		await client.close();
 	}
@@ -39,12 +41,11 @@ async function run(data) {
 export function POST({ request }) {
 	//RequestEvent     ^
 	console.log('server received POST request for like update of records below:');
-	let newCount;
+
 	request.json().then((payload) => {
 		console.log('\t' + payload.photoId + ' >>> ' + payload.likeCount);
-		run(payload).catch(console.dir);
-		newCount = payload.likeCount;
+		run(payload);
 	});
 
-	return new Response(String(newCount));
+	return new Response();
 }
