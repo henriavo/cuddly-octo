@@ -11,6 +11,27 @@
 		<div class="container">
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 				<Photo
+					photoId="1409"
+					likeCount={data.likesArray[9].count}
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1409.JPG"
+					caption="We were having lunch at the morton arboretum. She was looking for her lunch too 👀"
+					timestamp={data.likesArray[9].elapsed_days}
+				/>
+				<Photo
+					photoId="1408"
+					likeCount={data.likesArray[8].count}
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1408.JPG"
+					caption="This fluffy hoodie witht the ears is my favorite"
+					timestamp={data.likesArray[8].elapsed_days}
+				/>
+				<Photo
+					photoId="1407"
+					likeCount={data.likesArray[7].count}
+					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1407.JPG"
+					caption="Messy hair baby, she just woke up from a nap"
+					timestamp={data.likesArray[7].elapsed_days}
+				/>
+				<Photo
 					photoId="1406"
 					likeCount={data.likesArray[6].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1406.JPG"
