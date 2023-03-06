@@ -13,6 +13,7 @@ const client = new MongoClient(fullUrl, {
 	useUnifiedTopology: true,
 	serverApi: ServerApiVersion.v1
 });
+// const client = new MongoClient('mongodb://localhost:27017');
 const dbName = 'cuddly_octo';
 
 async function run(data) {

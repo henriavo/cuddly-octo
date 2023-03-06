@@ -15,42 +15,49 @@
 					likeCount={data.likesArray[0].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1400.JPG"
 					caption="Good morning baby"
+					timestamp={data.likesArray[0].elapsed_days}
 				/>
 				<Photo
 					photoId="1401"
 					likeCount={data.likesArray[1].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1401.JPG"
 					caption="Mid day nap"
+					timestamp={data.likesArray[1].elapsed_days}
 				/>
 				<Photo
 					photoId="1402"
 					likeCount={data.likesArray[2].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1402.JPG"
 					caption="I'm getting good at this swadle thing"
+					timestamp={data.likesArray[2].elapsed_days}
 				/>
 				<Photo
 					photoId="1403"
 					likeCount={data.likesArray[3].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1403.JPG"
 					caption="With her best buddy Benny"
+					timestamp={data.likesArray[3].elapsed_days}
 				/>
 				<Photo
 					photoId="1404"
 					likeCount={data.likesArray[4].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1404.JPG"
 					caption="A good nap after a meal"
+					timestamp={data.likesArray[4].elapsed_days}
 				/>
 				<Photo
 					photoId="1405"
 					likeCount={data.likesArray[5].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1405.JPG"
 					caption="Big smile after a meal"
+					timestamp={data.likesArray[5].elapsed_days}
 				/>
 				<Photo
 					photoId="1406"
 					likeCount={data.likesArray[6].count}
 					imageUrl="https://henri-public-bucket.s3.us-east-2.amazonaws.com/IMG_1406.JPG"
 					caption="This lamb onesie is cute"
+					timestamp={data.likesArray[6].elapsed_days}
 				/>
 				<!-- TODO: handle null in likeArray -->
 			</div>

@@ -7,6 +7,7 @@
 	export let likeCount = 0;
 	export let photoId;
 	export let caption = 'hello world';
+	export let timestamp = '-1 Days Ago';
 
 	async function addOneLike() {
 		try {
@@ -43,5 +44,6 @@
 				>❤️ {likeCount}</button
 			>
 		</div>
+		<div class="card-footer text-muted"><small>{timestamp}</small></div>
 	</div>
 </div>

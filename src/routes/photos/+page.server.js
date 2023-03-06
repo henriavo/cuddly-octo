@@ -13,6 +13,7 @@ const client = new MongoClient(fullUrl, {
 	useUnifiedTopology: true,
 	serverApi: ServerApiVersion.v1
 });
+// const client = new MongoClient('mongodb://localhost:27017');
 const dbName = 'cuddly_octo';
 
 async function run() {
@@ -25,11 +26,12 @@ async function run() {
 		const rrr = await cursor.toArray();
 		console.log('successful load from db. all records below:');
 		rrr.forEach(function (item, index) {
-			console.log('\t' + index + ' ' + item._id + ' ' + item.count);
+			console.log('\t' + index + ' ' + item._id + ' ' + item.count + ' ' + item.upload_date);
+			// item.elapsed_days = getDaysElapsed(item.upload_date);
 		});
 		return rrr;
 	} catch (error) {
-		console.error(`ERRORRR: ${error}`)
+		console.error(`ERRORRR: ${error}`);
 	} finally {
 		await client.close();
 	}
@@ -39,4 +41,21 @@ async function run() {
 export async function load() {
 	const arrayresult = run();
 	return { likesArray: arrayresult };
+}
+
+function getDaysElapsed(dateStr1) {
+	console.log('111 ' + dateStr1);
+	const date1 = new Date(dateStr1);
+	const date2 = new Date();
+	const diffMs = date2.getTime() - date1.getTime();
+	const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+	if (diffDays < 8) return diffDays + ' Days Ago';
+	if (diffDays < 29) {
+		let weeks = diffDays / 7;
+		return weeks + ' Weeks Ago';
+	} else {
+		console.log('>>> ' + date1.toDateString());
+		return date1.toDateString();
+	}
 }
