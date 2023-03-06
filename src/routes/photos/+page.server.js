@@ -51,7 +51,7 @@ function getDaysElapsed(dateStr1) {
 	const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
 	if (diffDays < 8) return diffDays + ' Days Ago';
-	if (diffDays < 29) {
+	if (diffDays < 15) {
 		let weeks = diffDays / 7;
 		return weeks + ' Weeks Ago';
 	} else {
