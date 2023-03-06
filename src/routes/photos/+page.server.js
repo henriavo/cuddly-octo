@@ -27,7 +27,7 @@ async function run() {
 		console.log('successful load from db. all records below:');
 		rrr.forEach(function (item, index) {
 			console.log('\t' + index + ' ' + item._id + ' ' + item.count + ' ' + item.upload_date);
-			// item.elapsed_days = getDaysElapsed(item.upload_date);
+			item.elapsed_days = getDaysElapsed(item.upload_date);
 		});
 		return rrr;
 	} catch (error) {
