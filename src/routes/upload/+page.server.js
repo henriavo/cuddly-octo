@@ -1,5 +1,5 @@
 //var AWS = require("aws-sdk");
-import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
+import { S3Client, ListObjectsCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -14,22 +14,14 @@ export const actions = {
 export async function load() {
 	console.log('aws s3 connecting...');
 	const client = new S3Client({ region: 'us-east-2' });
-	const input = {
-		// ListObjectsRequest
-		Bucket: 'henri-public-bucket', // required
-		// Delimiter: 'STRING_VALUE',
-		// EncodingType: 'url',
-		// Marker: 'STRING_VALUE',
-		MaxKeys: Number('3'),
-		// Prefix: 'STRING_VALUE',
-		// RequestPayer: 'requester',
-		// ExpectedBucketOwner: 'STRING_VALUE',
-		OptionalObjectAttributes: [
-			// OptionalObjectAttributesList
-			'RestoreStatus'
-		]
+
+	const params = {
+		Bucket: 'henri-public-bucket', 
+		Key: 'sample_upload.txt', 
+		Body: 'hello world from chicago!' 
 	};
-	const command = new ListObjectsCommand(input);
+	const command = new PutObjectCommand(params);
+
 	const response = await client.send(command);
 	console.log(response);
 }
