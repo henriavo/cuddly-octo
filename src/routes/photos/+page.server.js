@@ -44,7 +44,7 @@ export async function load() {
 }
 
 function getDaysElapsed(dateStr1) {
-	console.log('111 ' + dateStr1);
+	//console.log('$$$ ' + dateStr1);
 	const date1 = new Date(dateStr1);
 	const date2 = new Date();
 	const diffMs = date2.getTime() - date1.getTime();
@@ -55,7 +55,7 @@ function getDaysElapsed(dateStr1) {
 		let weeks = diffDays / 7;
 		return weeks + ' Weeks Ago';
 	} else {
-		console.log('>>> ' + date1.toDateString());
+		//console.log('$$$ ' + date1.toDateString());
 		return date1.toDateString();
 	}
 }
