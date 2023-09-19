@@ -5,7 +5,7 @@ import { USER_NAME } from '$env/static/private';
 import { MONGO_SERVER } from '$env/static/private';
 
 import { S3RequestPresigner } from '@aws-sdk/s3-request-presigner';
-import { fromIni } from '@aws-sdk/credential-providers';
+import { fromIni, fromEnv } from '@aws-sdk/credential-providers';
 import { formatUrl } from '@aws-sdk/util-format-url';
 import { HttpRequest } from '@smithy/protocol-http';
 import { parseUrl } from '@smithy/url-parser';
@@ -29,7 +29,7 @@ const dbName = 'cuddly_octo';
 const createPresignedUrlWithoutClient = async ({ region, bucket, key }) => {
 	const url = parseUrl(`https://${bucket}.s3.${region}.amazonaws.com/${key}`);
 	const presigner = new S3RequestPresigner({
-		credentials: fromIni(),
+		credentials: fromEnv(),
 		region,
 		sha256: Hash.bind(null, 'sha256')
 	});
