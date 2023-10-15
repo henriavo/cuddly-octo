@@ -16,7 +16,7 @@ const client = new MongoClient(fullUrl, {
 // const client = new MongoClient('mongodb://localhost:27017');
 const dbName = 'cuddly_octo';
 
-async function run(data) {
+async function saveLike(data) {
 	try {
 		await client.connect();
 		console.log('connected successfully to mongo db');
@@ -41,11 +41,11 @@ async function run(data) {
 /** @type {import('./$types').RequestHandler} */
 export function POST({ request }) {
 	//RequestEvent     ^
-	console.log('server received POST request for like update of records below:');
+	console.log('>>> server received POST request for like update of records below:');
 
 	request.json().then((payload) => {
-		console.log('\t' + payload.photoId + ' >>> ' + payload.likeCount);
-		run(payload);
+		console.log('\t' + payload.photoId + ' -> ' + payload.likeCount);
+		saveLike(payload);
 	});
 
 	return new Response();
