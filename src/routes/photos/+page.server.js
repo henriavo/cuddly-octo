@@ -29,7 +29,7 @@ const dbName = 'cuddly_octo';
 const createPresignedUrlWithoutClient = async ({ region, bucket, key }) => {
 	const url = parseUrl(`https://${bucket}.s3.${region}.amazonaws.com/${key}`);
 	const presigner = new S3RequestPresigner({
-		credentials: fromEnv(),
+		credentials: fromIni(),
 		region,
 		sha256: Hash.bind(null, 'sha256')
 	});
