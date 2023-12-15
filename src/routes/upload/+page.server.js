@@ -1,24 +1,24 @@
 import https from 'https';
-import { S3Client, ListObjectsCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3RequestPresigner } from '@aws-sdk/s3-request-presigner';
 import { fromIni, fromEnv } from '@aws-sdk/credential-providers';
 import { formatUrl } from '@aws-sdk/util-format-url';
 import { HttpRequest } from '@smithy/protocol-http';
 import { parseUrl } from '@smithy/url-parser';
 import { Hash } from '@smithy/hash-node';
-import fs from 'fs';
-import { type } from 'os';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	default: async ({ cookies, request }) => {
-		const data = await request.formData();
-		const file = data.get('photofile');
-		console.log('receive form post');
-		// file object
-		console.log(file);
+	default: async ({ request }) => {
+		const formData = await request.formData();
+		const file = formData.get('photofile');
 
-		uploadPicture(file);
+		if (file instanceof File === false || file.size === 0) {
+			console.log('No file was uploaded!');
+		} else {
+			console.log('File uploaded!');
+			console.log(file);
+			uploadPicture(file);
+		}
 	}
 };
 
@@ -26,8 +26,7 @@ export const actions = {
 async function uploadPicture(file) {
 	const REGION = 'us-east-2';
 	const BUCKET = 'henri-public-bucket';
-	const KEY = 'winter.txt';
-	// const KEY = 'assasins.jpg';
+	const KEY = 'assasins005.jpg';
 
 	try {
 		const noClientUrl = await createPresignedUrlWithoutClientPut({
@@ -39,12 +38,8 @@ async function uploadPicture(file) {
 		});
 
 		console.log('Presigned URL created!');
-		//console.log(noClientUrl);
 
-		//await put(noClientUrl, file);
-		await put(noClientUrl, 'nadien sabe lo que va a pasar mañana');
-
-		console.log('\nDone. Check your S3 console.');
+		await put(noClientUrl, file);
 	} catch (err) {
 		console.error(err);
 	}
@@ -53,7 +48,7 @@ async function uploadPicture(file) {
 const createPresignedUrlWithoutClientPut = async ({ region, bucket, key }) => {
 	const url = parseUrl(`https://${bucket}.s3.${region}.amazonaws.com/${key}`);
 	const presigner = new S3RequestPresigner({
-		credentials: fromEnv(),
+		credentials: fromIni(),
 		region,
 		sha256: Hash.bind(null, 'sha256')
 	});
@@ -62,30 +57,43 @@ const createPresignedUrlWithoutClientPut = async ({ region, bucket, key }) => {
 	return formatUrl(signedUrlObject);
 };
 
-function put(url, data) {
+async function put(url, file) {
 	return new Promise((resolve, reject) => {
 		const options = {
 			method: 'PUT',
 			headers: {
-				//'Content-Type': 'image/jpeg', // Set appropriate content type
-				'Content-Length': data.length
+				'Content-Type': 'multipart/form-data',
+				'Content-Length': file.size
 			}
 		};
 
 		const req = https.request(url, options, (res) => {
-			let responseBody = '';
-			res.on('data', (chunk) => {
-				responseBody += chunk;
-			});
-			res.on('end', () => {
-				resolve(responseBody);
-			});
+			console.log(`Response from S3 status code: ${res.statusCode}`);
 		});
 
-		req.on('error', (err) => {
-			reject(err);
+		req.on('error', (error) => {
+			console.error(error);
+			reject(error);
 		});
-		req.write(data);
-		req.end();
+
+		try {
+			file
+				.arrayBuffer()
+				.then((content) => {
+					const buffer = Buffer.from(content);
+					//console.log(buffer); image contents
+					req.write(buffer);
+					req.end();
+				})
+				.catch((error) => {
+					console.error(error);
+					reject(error);
+				});
+			console.log('Upload to S3 is Done. Check your S3 console.');
+			resolve();
+		} catch (error) {
+			console.error(error);
+			reject(error);
+		}
 	});
 }
