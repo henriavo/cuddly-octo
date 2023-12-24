@@ -85,7 +85,6 @@ async function loadPicturesDb() {
 }
 
 function getDaysElapsed(dateStr1) {
-	//console.log('$$$ ' + dateStr1);
 	const date1 = new Date(dateStr1);
 	const date2 = new Date();
 	const diffMs = date2.getTime() - date1.getTime();
