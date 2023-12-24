@@ -16,6 +16,8 @@ export const actions = {
 			console.log('No file was uploaded!');
 		} else {
 			console.log('File uploaded!');
+			// query db for next file name available. i.e. photo001.jpg or photo002.jpg
+			// pass the file name to the uploadPicture function
 			console.log(file);
 			uploadPicture(file);
 		}
@@ -97,3 +99,6 @@ async function put(url, file) {
 		}
 	});
 }
+
+
+
