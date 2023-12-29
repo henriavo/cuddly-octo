@@ -27,6 +27,8 @@ const client = new MongoClient(fullUrl, {
 
 const dbName = 'cuddly_octo';
 
+const BUCKET_NAME = 'henri-public-bucket';
+
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async ({ request }) => {
@@ -41,12 +43,32 @@ export const actions = {
 			console.log('$$$$: ' + fileNumber);
 			//console.log(file);
 			uploadPicture(file, fileNumber);
+			saveMetadataToDb(fileNumber);
 		}
 	}
 };
 
 // ****************************************************************************************************
 
+async function saveMetadataToDb(fileNumber) {
+	try {
+		await client.connect();
+		console.log('connected successfully to mongo db.');
+		const db = client.db(dbName);
+		const collection = db.collection('pictures');
+		const r = await collection.insertOne({
+			_id: fileNumber,
+			like_count: 0,
+			s3_path: 's3://' + BUCKET_NAME + '/' + 'IMG_' + fileNumber + '.JPG',
+			upload_date: new Date()
+		});
+		console.log('successful metadata save to db.');
+	} catch (error) {
+		console.error(`ERRORRR: ${error}`);
+	} finally {
+		await client.close();
+	}
+}
 async function getFileName() {
 	try {
 		await client.connect();
@@ -66,7 +88,7 @@ async function getFileName() {
 
 async function uploadPicture(file, fileNumber) {
 	const REGION = 'us-east-2';
-	const BUCKET = 'henri-public-bucket';
+	const BUCKET = BUCKET_NAME;
 	const KEY = 'IMG_' + fileNumber + '.JPG';
 
 	try {
