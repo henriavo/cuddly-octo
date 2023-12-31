@@ -44,9 +44,14 @@ async function loadPicturesS3(array_result) {
 		map[key] = {
 			url: await loadPictures(bucket, key),
 			likes: array_result[i].like_count,
+			caption: array_result[i].caption,
 			elapsed: array_result[i].elapsed_days
 		};
 	}
+	//look through map and print out the keys
+	// for (const key in map) {
+	// 	console.log(key);
+	// }
 
 	return { photo: map };
 }
@@ -76,7 +81,7 @@ async function loadPicturesDb() {
 			// );
 			item.elapsed_days = getDaysElapsed(item.upload_date);
 		});
-		return rrr;
+		return rrr.reverse();
 	} catch (error) {
 		console.error(`ERRORRR: ${error}`);
 	} finally {
