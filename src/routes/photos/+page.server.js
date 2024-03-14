@@ -25,7 +25,8 @@ const client = new MongoClient(fullUrl, {
 });
 
 // const client = new MongoClient('mongodb://localhost:27017');
-const dbName = 'cuddly_octo';
+const DB_NAME = 'cuddly_octo';
+const DB_COLLECTION = "pictures";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
@@ -60,8 +61,8 @@ async function loadPicturesDb() {
 	try {
 		await client.connect();
 		console.log('connected successfully to mongo db.');
-		const db = client.db(dbName);
-		const collection = db.collection('pictures');
+		const db = client.db(DB_NAME);
+		const collection = db.collection(DB_COLLECTION);
 		const cursor = collection.find().sort({ _id: 1 });
 		const rrr = await cursor.toArray();
 		console.log('successful load from db.');
