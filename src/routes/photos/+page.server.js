@@ -26,7 +26,7 @@ const client = new MongoClient(fullUrl, {
 
 // const client = new MongoClient('mongodb://localhost:27017');
 const DB_NAME = 'cuddly_octo';
-const DB_COLLECTION = "pictures";
+const DB_COLLECTION = 'pictures';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
