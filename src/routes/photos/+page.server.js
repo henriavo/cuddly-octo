@@ -67,19 +67,19 @@ async function loadPicturesDb() {
 		const rrr = await cursor.toArray();
 		console.log('successful load from db.');
 		rrr.forEach(function (item, index) {
-			// console.log(
-			// 	'\t' +
-			// 		index +
-			// 		' ' +
-			// 		item._id +
-			// 		' ' +
-			// 		item.like_count +
-			// 		' ' +
-			// 		item.s3_path +
-			// 		' ' +
-			// 		' ' +
-			// 		item.upload_date
-			// );
+			 console.log(
+			 	'\t' +
+			 		index +
+			 		' ' +
+			 		item._id +
+			 		' ' +
+			 		item.like_count +
+			 		' ' +
+			 		item.s3_path +
+			 		' ' +
+			 		' ' +
+			 		item.upload_date
+			 );
 			item.elapsed_days = getDaysElapsed(item.upload_date);
 		});
 		return rrr.reverse();
