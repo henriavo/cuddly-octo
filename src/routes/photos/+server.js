@@ -14,14 +14,15 @@ const client = new MongoClient(fullUrl, {
 	serverApi: ServerApiVersion.v1
 });
 // const client = new MongoClient('mongodb://localhost:27017');
-const dbName = 'cuddly_octo';
+const DB_NAME = 'cuddly_octo';
+const DB_COLLECTION = 'pictures';
 
 async function saveLike(data) {
 	try {
 		await client.connect();
 		console.log('connected successfully to mongo db');
 		const db = client.db(dbName);
-		const collection = db.collection('picture_likes');
+		const collection = db.collection(DB_COLLECTION);
 		const query = { _id: Number(data.photoId) };
 		const update = { $set: { count: Number(data.likeCount) } };
 		const options = { upsert: true };

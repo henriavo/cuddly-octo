@@ -32,9 +32,28 @@ const DB_COLLECTION = 'pictures';
 export async function load() {
 	const arrayresult = await loadPicturesDb();
 
+	// print out contents of arrayresult
+	for (let i = 0; i < arrayresult.length; i++) {
+		console.log(
+			'\t' +
+				i +
+				' ' +
+				arrayresult[i]._id +
+				' ' +
+				arrayresult[i].like_count +
+				' ' +
+				arrayresult[i].s3_path +
+				' ' +
+				' ' +
+				arrayresult[i].upload_date
+		);
+	}
+
 	console.log('Found picture metadata for count: ' + arrayresult.length);
 
-	return await loadPicturesS3(arrayresult);
+	const result = await loadPicturesS3(arrayresult);
+	console.log(result);
+	return result;
 }
 
 async function loadPicturesS3(array_result) {
@@ -118,9 +137,9 @@ async function loadPictures(bucket, key) {
 			key: KEY
 		});
 
-		//console.log('Presigned URL created!');
-		// console.log(noClientUrl);
-		// console.log('\n');
+		console.log('Presigned URL created!');
+		console.log(noClientUrl);
+		console.log('\n');
 
 		return noClientUrl;
 	} catch (err) {
@@ -131,7 +150,7 @@ async function loadPictures(bucket, key) {
 const createPresignedUrlWithoutClient = async ({ region, bucket, key }) => {
 	const url = parseUrl(`https://${bucket}.s3.${region}.amazonaws.com/${key}`);
 	const presigner = new S3RequestPresigner({
-		// credentials: fromIni(),
+		//credentials: fromIni(),
 		credentials: fromEnv(),
 		region,
 		sha256: Hash.bind(null, 'sha256')

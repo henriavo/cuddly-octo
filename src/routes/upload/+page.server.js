@@ -111,7 +111,8 @@ async function uploadPicture(file, fileNumber) {
 const createPresignedUrlWithoutClientPut = async ({ region, bucket, key }) => {
 	const url = parseUrl(`https://${bucket}.s3.${region}.amazonaws.com/${key}`);
 	const presigner = new S3RequestPresigner({
-		credentials: fromIni(),
+		//credentials: fromIni(),
+		credentials: fromEnv(),
 		region,
 		sha256: Hash.bind(null, 'sha256')
 	});
