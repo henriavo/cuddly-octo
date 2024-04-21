@@ -25,8 +25,8 @@ const client = new MongoClient(fullUrl, {
 	serverApi: ServerApiVersion.v1
 });
 
-const dbName = 'cuddly_octo';
-
+const DB_NAME = 'cuddly_octo';
+const COLLECTION_NAME = 'pictures';
 const BUCKET_NAME = 'henri-public-bucket';
 
 /** @type {import('./$types').Actions} */
@@ -54,8 +54,8 @@ async function saveMetadataToDb(fileNumber) {
 	try {
 		await client.connect();
 		console.log('connected successfully to mongo db.');
-		const db = client.db(dbName);
-		const collection = db.collection('pictures');
+		const db = client.db(DB_NAME);
+		const collection = db.collection(COLLECTION_NAME);
 		const r = await collection.insertOne({
 			_id: fileNumber,
 			like_count: 0,
@@ -69,12 +69,13 @@ async function saveMetadataToDb(fileNumber) {
 		await client.close();
 	}
 }
+
 async function getFileName() {
 	try {
 		await client.connect();
 		console.log('connected successfully to mongo db.');
-		const db = client.db(dbName);
-		const collection = db.collection('pictures');
+		const db = client.db(DB_NAME);
+		const collection = db.collection(COLLECTION_NAME);
 		const cursor = collection.find().sort({ _id: 1 });
 		const rrr = await cursor.toArray();
 		console.log('successful load from db.');
