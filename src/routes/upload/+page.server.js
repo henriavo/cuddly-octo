@@ -34,6 +34,7 @@ export const actions = {
 	default: async ({ request }) => {
 		const formData = await request.formData();
 		const file = formData.get('photofile');
+		const caption = formData.get('caption');
 
 		if (file instanceof File === false || file.size === 0) {
 			console.log('No file was uploaded!');
@@ -43,14 +44,14 @@ export const actions = {
 			console.log('$$$$: ' + fileNumber);
 			//console.log(file);
 			uploadPicture(file, fileNumber);
-			saveMetadataToDb(fileNumber);
+			saveMetadataToDb(fileNumber, caption);
 		}
 	}
 };
 
 // ****************************************************************************************************
 
-async function saveMetadataToDb(fileNumber) {
+async function saveMetadataToDb(fileNumber, caption) {
 	try {
 		await client.connect();
 		console.log('connected successfully to mongo db.');
@@ -60,6 +61,7 @@ async function saveMetadataToDb(fileNumber) {
 			_id: fileNumber,
 			like_count: 0,
 			s3_path: 's3://' + BUCKET_NAME + '/' + 'IMG_' + fileNumber + '.JPG',
+			caption: caption,
 			upload_date: new Date()
 		});
 		console.log('successful metadata save to db.');

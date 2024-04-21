@@ -21,10 +21,11 @@ async function saveLike(data) {
 	try {
 		await client.connect();
 		console.log('connected successfully to mongo db');
-		const db = client.db(dbName);
+		const db = client.db(DB_NAME);
 		const collection = db.collection(DB_COLLECTION);
-		const query = { _id: Number(data.photoId) };
-		const update = { $set: { count: Number(data.likeCount) } };
+		let dbKey = data.photoId.replace(/IMG_(\d+).JPG/, '$1');
+		const query = { _id: Number(dbKey) };
+		const update = { $set: { like_count: Number(data.likeCount) } };
 		const options = { upsert: true };
 		const result = await collection.updateOne(query, update, options);
 		console.log(
