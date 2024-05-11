@@ -30,7 +30,9 @@ export const actions = {
 		console.log(password);
 		const password_confirm = data.get('password');
 		console.log(password_confirm);
-		await doesUserAlreadyExist(email);
+		if (!(await doesUserAlreadyExist(email))) {
+			await createUser(email, password);
+		}
 	}
 };
 
@@ -56,6 +58,21 @@ async function doesUserAlreadyExist(email) {
 	}
 }
 
+async function createUser(email, password) {
+	try {
+		await client.connect();
+		console.log('connected successfully to mongo db.');
+		const db = client.db(DB_NAME);
+		const collection = db.collection(DB_COLLECTION);
+		const result = await collection.insertOne({ email: email, password: password });
+		console.log('User created successfully');
+	} catch (error) {
+		console.error(`ERRORRR: ${error}`);
+	} finally {
+		await client.close();
+	}
+}
+
 // REGISTGER PAGE
 // connect to Mongo DB
 // query and check for duplicate email. SELECT * FROM USERS WHERE email = email. if count!=0, return error message.
@@ -67,4 +84,3 @@ async function doesUserAlreadyExist(email) {
 // if email exists, check password. SELECT * FROM USERS WHERE email = email AND password = password. if count==0, return error message.
 // if password matches, return success message.
 //
-
