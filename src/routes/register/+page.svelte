@@ -2,10 +2,6 @@
 	let password;
 	let confirm_password;
 
-	function handleSubmit() {
-		if (password !== confirm_password) return;
-		console.log('Passwords match!');
-	}
 </script>
 
 <main>
@@ -13,7 +9,7 @@
 		<div class="card" style="width: 18rem;">
 			<div class="card-header">Register Form</div>
 			<div class="card-body">
-				<form on:submit|preventDefault={handleSubmit} action="/register" method="POST">
+				<form  action="/register" method="POST">
 					<div class="mb-3">
 						<label for="email-reg" class="form-label">Email</label>
 						<input type="text" class="form-control" id="email-reg" name="email" required />
