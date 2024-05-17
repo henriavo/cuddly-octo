@@ -6,6 +6,9 @@ import { parseUrl } from '@smithy/url-parser';
 import { Hash } from '@smithy/hash-node';
 import AmazonS3URI from 'amazon-s3-uri';
 
+// ****************
+// DOWNLOAD PICTURE
+
 export async function loadPicturesS3(array_result) {
 	const map = {};
 
@@ -60,3 +63,82 @@ const createPresignedUrlWithoutClient = async ({ region, bucket, key }) => {
 	const signedUrlObject = await presigner.presign(new HttpRequest(url));
 	return formatUrl(signedUrlObject);
 };
+
+// ***************
+// UPLOAD PICTURE
+
+export async function uploadPicture(file, fileNumber) {
+	const REGION = 'us-east-2';
+	const BUCKET = BUCKET_NAME;
+	const KEY = 'IMG_' + fileNumber + '.JPG';
+
+	try {
+		const noClientUrl = await createPresignedUrlWithoutClientPut({
+			region: REGION,
+			bucket: BUCKET,
+			key: KEY,
+			ContentType: 'image/jpeg',
+			Expires: 120 // 2 minutes
+		});
+
+		console.log('Presigned URL created!');
+
+		await put(noClientUrl, file);
+	} catch (err) {
+		console.error(err);
+	}
+}
+
+const createPresignedUrlWithoutClientPut = async ({ region, bucket, key }) => {
+	const url = parseUrl(`https://${bucket}.s3.${region}.amazonaws.com/${key}`);
+	const presigner = new S3RequestPresigner({
+		//credentials: fromIni(),
+		credentials: fromEnv(),
+		region,
+		sha256: Hash.bind(null, 'sha256')
+	});
+
+	const signedUrlObject = await presigner.presign(new HttpRequest({ ...url, method: 'PUT' }));
+	return formatUrl(signedUrlObject);
+};
+
+async function put(url, file) {
+	return new Promise((resolve, reject) => {
+		const options = {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				'Content-Length': file.size
+			}
+		};
+
+		const req = https.request(url, options, (res) => {
+			console.log(`Response from S3 status code: ${res.statusCode}`);
+		});
+
+		req.on('error', (error) => {
+			console.error(error);
+			reject(error);
+		});
+
+		try {
+			file
+				.arrayBuffer()
+				.then((content) => {
+					const buffer = Buffer.from(content);
+					//console.log(buffer); image contents
+					req.write(buffer);
+					req.end();
+				})
+				.catch((error) => {
+					console.error(error);
+					reject(error);
+				});
+			console.log('Upload to S3 is Done. Check your S3 console.');
+			resolve();
+		} catch (error) {
+			console.error(error);
+			reject(error);
+		}
+	});
+}
