@@ -20,9 +20,9 @@ export const actions = {
 				password_confirm: data.get('password-confirm'),
 				error: 'Passwords do not match'
 			});
-		} 
+		}
 
-		if (!(await db.doesUserAlreadyExist(email))) {
+		if (!(await db.doesUserAlreadyExist(email)) && (await db.emailInAllowList(email))) {
 			await db.createUser(email, password);
 			console.log('User created successfully');
 			return { success: true };

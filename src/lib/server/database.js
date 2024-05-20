@@ -71,6 +71,27 @@ export async function doesUserAlreadyExist(email) {
 	}
 }
 
+export async function emailInAllowList(email) {
+	try {
+		await client.connect();
+		console.log('connected successfully to mongo db.');
+		const db = client.db(DB_NAME);
+		const allowCollection = db.collection('allow');
+		const allowRestult = await allowCollection.findOne({ email: email });
+		if (allowRestult) {
+			console.log('User allowed');
+			return true;
+		} else {
+			console.log('User not allowed');
+			return false;
+		}
+	} catch (error) {
+		console.error(`ERRORRR: ${error}`);
+	} finally {
+		await client.close();
+	}
+}
+
 export async function createUser(email, password) {
 	try {
 		await client.connect();
