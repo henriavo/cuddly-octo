@@ -27,6 +27,7 @@ export const actions = {
 			console.log('User created successfully');
 			return { success: true };
 		}
+		// TODO: add error message for user not allowed
 	}
 };
 

@@ -98,7 +98,7 @@ export async function createUser(email, password) {
 		console.log('connected successfully to mongo db.');
 		const db = client.db(DB_NAME);
 		const collection = db.collection(USERS_COLLECTION);
-		const result = await collection.insertOne({ email: email, password: password });
+		await collection.insertOne({ email: email, password: password });
 		console.log('User created successfully');
 	} catch (error) {
 		console.error(`ERRORRR: ${error}`);
@@ -116,7 +116,7 @@ export async function saveMetadataToDb(fileNumber, caption) {
 		console.log('connected successfully to mongo db.');
 		const db = client.db(DB_NAME);
 		const collection = db.collection(PICTURES_COLLECTION);
-		const r = await collection.insertOne({
+		await collection.insertOne({
 			_id: fileNumber,
 			like_count: 0,
 			s3_path: 's3://' + BUCKET_NAME + '/' + 'IMG_' + fileNumber + '.JPG',
