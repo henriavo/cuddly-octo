@@ -23,6 +23,30 @@ const USERS_COLLECTION = 'users';
 const PICTURES_COLLECTION = 'pictures';
 
 // ***************
+// LOGIN USER
+export async function loginAttempt(email, password) {
+	try {
+		await client.connect();
+		console.log('connected successfully to mongo db.');
+		const db = client.db(DB_NAME);
+		const collection = db.collection(USERS_COLLECTION);
+		const cursor = collection.find({ email: email, password: password });
+		const count = await cursor.count();
+		if (count !== 0) {
+			console.log('User found');
+			return true;
+		} else {
+			console.log('User not found');
+			return false;
+		}
+	} catch (error) {
+		console.error(`ERRORRR: ${error}`);
+	} finally {
+		await client.close();
+	}
+}
+
+// ***************
 // REGISTER USER
 
 export async function doesUserAlreadyExist(email) {

@@ -1,3 +1,5 @@
+import { loginAttempt } from '$lib/server/database';
+
 /** @type {import('./$types').Actions} */
 export const actions = {
 	login: async ({ cookies, request }) => {
@@ -10,9 +12,18 @@ export const actions = {
 		console.log(pazz);
 		const remember = data.get('tux-fish');
 		console.log(remember);
-		return {
-			status: 200,
-			body: 'hello from login page'
-		};
+
+		if (await loginAttempt(email, pazz)) {
+			console.log('User found');
+		} else {
+			console.log('User not found');
+		}
+
+		//  doesUserAlreadyExist(email);
+		// does password match db password
+		// if yes, set cookie
+		// if no, return error
+		// if user does not exist, return error
+		// return 200
 	}
 };
