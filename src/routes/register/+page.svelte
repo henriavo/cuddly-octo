@@ -7,7 +7,7 @@
 <main>
 	<div class="container mt-4">
 		<div class="card" style="width: 18rem;">
-			<div class="card-header">Register Form</div>
+			<div class="card-header">Register</div>
 			<div class="card-body">
 				<form action="/register" method="POST">
 					<div class="mb-3">
