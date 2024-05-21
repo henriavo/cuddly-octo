@@ -6,6 +6,8 @@ import { parseUrl } from '@smithy/url-parser';
 import { Hash } from '@smithy/hash-node';
 import AmazonS3URI from 'amazon-s3-uri';
 
+export const BUCKET_NAME = 'henri-public-bucket';
+
 // ****************
 // DOWNLOAD PICTURE
 
@@ -69,13 +71,12 @@ const createPresignedUrlWithoutClient = async ({ region, bucket, key }) => {
 
 export async function uploadPicture(file, fileNumber) {
 	const REGION = 'us-east-2';
-	const BUCKET = BUCKET_NAME;
 	const KEY = 'IMG_' + fileNumber + '.JPG';
 
 	try {
 		const noClientUrl = await createPresignedUrlWithoutClientPut({
 			region: REGION,
-			bucket: BUCKET,
+			bucket: BUCKET_NAME,
 			key: KEY,
 			ContentType: 'image/jpeg',
 			Expires: 120 // 2 minutes

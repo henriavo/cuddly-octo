@@ -4,6 +4,8 @@ import { USER_PASS } from '$env/static/private';
 import { USER_NAME } from '$env/static/private';
 import { MONGO_SERVER } from '$env/static/private';
 
+import { BUCKET_NAME } from '$lib/server/awsS3.js';
+
 const url = 'mongodb+srv://<<user>>:<<credential>>@<<server>>/?retryWrites=true&w=majority';
 const fullUrl = url
 	.replace('<<user>>', USER_NAME)
@@ -18,7 +20,6 @@ const client = new MongoClient(fullUrl, {
 
 // const client = new MongoClient('mongodb://localhost:27017');
 const DB_NAME = 'cuddly_octo';
-const BUCKET_NAME = 'henri-public-bucket';
 const USERS_COLLECTION = 'users';
 const PICTURES_COLLECTION = 'pictures';
 
