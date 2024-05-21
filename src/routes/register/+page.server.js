@@ -34,11 +34,6 @@ export const actions = {
 	}
 };
 
-// REGISTGER PAGE
-// connect to Mongo DB
-// query and check for duplicate email. SELECT * FROM USERS WHERE email = email. if count!=0, return error message.
-// if no duplicate, create new user. INSERT INTO USERS (email, password) VALUES (email, password).
-
 // LOGIN PAGE
 // connect to Mongo DB
 // query and check for email. SELECT * FROM USERS WHERE email = email. if count==0, return error message.
