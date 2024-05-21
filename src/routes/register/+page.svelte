@@ -46,7 +46,7 @@
 					<br />
 					<br />
 					{#if form?.error}
-						<div class="alert alert-danger" role="alert">Passwords do not match</div>
+						<div class="alert alert-danger" role="alert">{form.error}</div>
 					{/if}
 					{#if form?.success}
 						<div class="alert alert-primary" role="alert">Successfully registered!</div>

@@ -5,6 +5,7 @@ import { HttpRequest } from '@smithy/protocol-http';
 import { parseUrl } from '@smithy/url-parser';
 import { Hash } from '@smithy/hash-node';
 import AmazonS3URI from 'amazon-s3-uri';
+import https from 'https';
 
 export const BUCKET_NAME = 'henri-public-bucket';
 

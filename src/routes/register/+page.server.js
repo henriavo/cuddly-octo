@@ -6,28 +6,31 @@ export const actions = {
 	default: async ({ request }) => {
 		const data = await request.formData();
 		const email = data.get('email');
-		console.log(email);
 		const password = data.get('password');
-		console.log(password);
 		const password_confirm = data.get('password-confirm');
-		console.log(password_confirm);
 
 		if (password !== password_confirm) {
-			console.log('Passwords do not match');
+			console.log('Passwords do not match!');
 			return fail(422, {
 				email: data.get('email'),
-				password: data.get('password'),
-				password_confirm: data.get('password-confirm'),
 				error: 'Passwords do not match'
 			});
-		}
-
-		if (!(await db.doesUserAlreadyExist(email)) && (await db.emailInAllowList(email))) {
+		} else if (await db.doesUserAlreadyExist(email)) {
+			console.log('User already exists!');
+			return fail(403, {
+				email: data.get('email'),
+				error: 'Error registering user'
+			});
+		} else if (!(await db.emailInAllowList(email))) {
+			console.log('Email not in allow list!');
+			return fail(403, {
+				email: data.get('email'),
+				error: 'Error registering user'
+			});
+		} else {
 			await db.createUser(email, password);
-			console.log('User created successfully');
-			return { success: true };
+			console.log('User created successfully.');
 		}
-		// TODO: add error message for user not allowed
 	}
 };
 

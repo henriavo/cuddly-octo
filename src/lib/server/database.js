@@ -34,10 +34,8 @@ export async function loginAttempt(email, password) {
 		const cursor = collection.find({ email: email, password: password });
 		const count = await cursor.count();
 		if (count !== 0) {
-			console.log('User found');
 			return true;
 		} else {
-			console.log('User not found');
 			return false;
 		}
 	} catch (error) {
@@ -59,10 +57,8 @@ export async function doesUserAlreadyExist(email) {
 		const cursor = collection.find({ email: email });
 		const count = await cursor.count();
 		if (count !== 0) {
-			console.log('User already exists');
 			return true;
 		} else {
-			console.log('User does not exist');
 			return false;
 		}
 	} catch (error) {
@@ -80,10 +76,8 @@ export async function emailInAllowList(email) {
 		const allowCollection = db.collection('allow');
 		const allowRestult = await allowCollection.findOne({ email: email });
 		if (allowRestult) {
-			console.log('User allowed');
 			return true;
 		} else {
-			console.log('User not allowed');
 			return false;
 		}
 	} catch (error) {
@@ -100,7 +94,6 @@ export async function createUser(email, password) {
 		const db = client.db(DB_NAME);
 		const collection = db.collection(USERS_COLLECTION);
 		await collection.insertOne({ email: email, password: password });
-		console.log('User created successfully');
 	} catch (error) {
 		console.error(`ERRORRR: ${error}`);
 	} finally {
