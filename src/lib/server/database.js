@@ -22,6 +22,7 @@ const client = new MongoClient(fullUrl, {
 const DB_NAME = 'cuddly_octo';
 const USERS_COLLECTION = 'users';
 const PICTURES_COLLECTION = 'pictures';
+const ALLOW_COLLECTION = 'allow';
 
 // ***************
 // LOGIN USER
@@ -73,7 +74,7 @@ export async function emailInAllowList(email) {
 		await client.connect();
 		console.log('connected successfully to mongo db.');
 		const db = client.db(DB_NAME);
-		const allowCollection = db.collection('allow');
+		const allowCollection = db.collection(ALLOW_COLLECTION);
 		const allowRestult = await allowCollection.findOne({ email: email });
 		if (allowRestult) {
 			return true;

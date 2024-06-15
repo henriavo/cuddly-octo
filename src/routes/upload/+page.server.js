@@ -11,12 +11,12 @@ export const actions = {
 		if (file instanceof File === false || file.size === 0) {
 			console.log('No file was uploaded!');
 		} else {
-			console.log('File uploaded!');
 			let fileNumber = await getFileName();
 			console.log('$$$$: ' + fileNumber);
 			//console.log(file);
 			uploadPicture(file, fileNumber);
 			saveMetadataToDb(fileNumber, caption);
+			console.log('File uploaded!');
 		}
 	}
 };
