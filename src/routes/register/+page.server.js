@@ -13,23 +13,24 @@ export const actions = {
 			console.log('Passwords do not match!');
 			return fail(422, {
 				email: data.get('email'),
-				error: 'Passwords do not match'
+				missmatch: true
 			});
 		} else if (await db.doesUserAlreadyExist(email)) {
 			console.log('User already exists!');
 			return fail(403, {
 				email: data.get('email'),
-				error: 'Error registering user'
+				duplicate: true
 			});
 		} else if (!(await db.emailInAllowList(email))) {
 			console.log('Email not in allow list!');
 			return fail(403, {
 				email: data.get('email'),
-				error: 'Error registering user'
+				notallowed: true
 			});
 		} else {
 			await db.createUser(email, password);
 			console.log('User created successfully.');
+			return { success: true };
 		}
 	}
 };

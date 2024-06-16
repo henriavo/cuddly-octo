@@ -1,6 +1,8 @@
 <script>
 	let password;
 	let confirm_password;
+
+	/** @type {import('./$types').ActionData} */
 	export let form;
 </script>
 
@@ -45,8 +47,14 @@
 					<button type="submit" class="btn btn-primary">Submit</button>
 					<br />
 					<br />
-					{#if form?.error}
-						<div class="alert alert-danger" role="alert">{form.error}</div>
+					{#if form?.missmatch}
+						<div class="alert alert-danger" role="alert">Passwords do not match</div>
+					{/if}
+					{#if form?.duplicate}
+						<div class="alert alert-danger" role="alert">User already exists</div>
+					{/if}
+					{#if form?.notallowed}
+						<div class="alert alert-danger" role="alert">Email not allowed</div>
 					{/if}
 					{#if form?.success}
 						<div class="alert alert-primary" role="alert">Successfully registered!</div>
