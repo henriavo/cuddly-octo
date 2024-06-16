@@ -56,9 +56,6 @@
 					{#if form?.notallowed}
 						<div class="alert alert-danger" role="alert">Email not allowed</div>
 					{/if}
-					{#if form?.success}
-						<div class="alert alert-primary" role="alert">Successfully registered!</div>
-					{/if}
 				</form>
 			</div>
 		</div>

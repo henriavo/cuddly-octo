@@ -1,5 +1,6 @@
 import * as db from '$lib/server/database.js';
 import { fail } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -30,7 +31,7 @@ export const actions = {
 		} else {
 			await db.createUser(email, password);
 			console.log('User created successfully.');
-			return { success: true };
+			throw redirect(307, '/upload');
 		}
 	}
 };
