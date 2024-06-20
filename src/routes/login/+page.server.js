@@ -1,4 +1,5 @@
 import { loginAttempt } from '$lib/server/database';
+import { redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -15,6 +16,7 @@ export const actions = {
 
 		if (await loginAttempt(email, pazz)) {
 			console.log('User found');
+			throw redirect(307, '/upload');
 		} else {
 			console.log('User not found');
 		}
