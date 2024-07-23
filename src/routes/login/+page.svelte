@@ -1,3 +1,11 @@
+<script>
+	let password;
+	let confirm_password;
+
+	/** @type {import('./$types').ActionData} */
+	export let form;
+</script>
+
 <main>
 	<div class="container mt-4">
 		<div class="card" style="width: 18rem;">
@@ -24,6 +32,11 @@
 					</div>
 					<br />
 					<button type="submit" class="btn btn-primary">Submit</button>
+					<br />
+					<br />
+					{#if form?.error}
+						<div class="alert alert-danger" role="alert">Error Logging In</div>
+					{/if}
 				</form>
 			</div>
 		</div>
