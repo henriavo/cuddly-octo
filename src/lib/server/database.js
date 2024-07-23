@@ -1,10 +1,9 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
-
 import { USER_PASS } from '$env/static/private';
 import { USER_NAME } from '$env/static/private';
 import { MONGO_SERVER } from '$env/static/private';
-
 import { BUCKET_NAME } from '$lib/server/awsS3.js';
+import bcrypt from 'bcryptjs';
 
 const url = 'mongodb+srv://<<user>>:<<credential>>@<<server>>/?retryWrites=true&w=majority';
 const fullUrl = url
@@ -26,15 +25,19 @@ const ALLOW_COLLECTION = 'allow';
 
 // ***************
 // LOGIN USER
-export async function loginAttempt(email, password) {
+export async function loginAttempt(email, userPassword) {
 	try {
 		await client.connect();
-		console.log('connected successfully to mongo db.');
+		console.log('loginAttempt() -- connected to mongo db.');
 		const db = client.db(DB_NAME);
 		const collection = db.collection(USERS_COLLECTION);
-		const cursor = collection.find({ email: email, password: password });
-		const count = await cursor.count();
-		if (count !== 0) {
+		const result = await collection.findOne({ email: email });
+		console.log('loginAttempt() -- found user email: ' + result.email);
+
+		const match = await bcrypt.compare(userPassword, result.password);
+		console.log('loginAttempt() -- password match: ' + match);
+
+		if (match) {
 			return true;
 		} else {
 			return false;
@@ -52,7 +55,7 @@ export async function loginAttempt(email, password) {
 export async function doesUserAlreadyExist(email) {
 	try {
 		await client.connect();
-		console.log('connected successfully to mongo db.');
+		console.log('connected to mongo db.');
 		const db = client.db(DB_NAME);
 		const collection = db.collection(USERS_COLLECTION);
 		const cursor = collection.find({ email: email });
@@ -72,7 +75,7 @@ export async function doesUserAlreadyExist(email) {
 export async function emailInAllowList(email) {
 	try {
 		await client.connect();
-		console.log('connected successfully to mongo db.');
+		console.log('connected to mongo db.');
 		const db = client.db(DB_NAME);
 		const allowCollection = db.collection(ALLOW_COLLECTION);
 		const allowRestult = await allowCollection.findOne({ email: email });
@@ -88,17 +91,32 @@ export async function emailInAllowList(email) {
 	}
 }
 
-export async function createUser(email, password) {
+export async function createUser(email, userPassword) {
+	//console.log('createUser() -- userPassword: ' + userPassword);
+	let hashedPassword = await hashPassword(userPassword);
+
 	try {
 		await client.connect();
-		console.log('connected successfully to mongo db.');
+		console.log('connected to mongo db.');
 		const db = client.db(DB_NAME);
 		const collection = db.collection(USERS_COLLECTION);
-		await collection.insertOne({ email: email, password: password });
+		await collection.insertOne({ email: email, password: hashedPassword });
 	} catch (error) {
 		console.error(`ERRORRR: ${error}`);
 	} finally {
 		await client.close();
+	}
+}
+
+async function hashPassword(userPassword) {
+	const saltRounds = 10;
+	try {
+		const salt = await bcrypt.genSalt(saltRounds);
+		const hashedPassword = await bcrypt.hash(userPassword, salt);
+		//console.log('Hashed password:', hashedPassword);
+		return hashedPassword;
+	} catch (err) {
+		console.log('Error:', err.message);
 	}
 }
 
