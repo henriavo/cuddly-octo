@@ -28,14 +28,14 @@ const ALLOW_COLLECTION = 'allow';
 export async function loginAttempt(email, userPassword) {
 	try {
 		await client.connect();
-		console.log('loginAttempt() -- connected to mongo db.');
+		console.log('database.loginAttempt() -- connected to mongo db.');
 		const db = client.db(DB_NAME);
 		const collection = db.collection(USERS_COLLECTION);
 		const result = await collection.findOne({ email: email });
-		console.log('loginAttempt() -- found user email: ' + result.email);
+		console.log('database.loginAttempt() -- found user email: ' + result.email);
 
 		const match = await bcrypt.compare(userPassword, result.password);
-		console.log('loginAttempt() -- password match: ' + match);
+		console.log('database.loginAttempt() -- password match: ' + match);
 
 		if (match) {
 			return true;
@@ -43,7 +43,7 @@ export async function loginAttempt(email, userPassword) {
 			return false;
 		}
 	} catch (error) {
-		console.error(`ERRORRR: ${error}`);
+		console.error(`database.loginAttempt() -- ERRORRR: ${error}`);
 	} finally {
 		await client.close();
 	}
