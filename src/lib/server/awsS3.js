@@ -5,7 +5,7 @@ import { HttpRequest } from '@smithy/protocol-http';
 import { parseUrl } from '@smithy/url-parser';
 import { Hash } from '@smithy/hash-node';
 import AmazonS3URI from 'amazon-s3-uri';
-import https from 'https';
+import axios from 'axios';
 
 export const BUCKET_NAME = 'henri-public-bucket';
 
@@ -105,42 +105,21 @@ const createPresignedUrlWithoutClientPut = async ({ region, bucket, key }) => {
 };
 
 async function put(url, file) {
-	return new Promise((resolve, reject) => {
-		const options = {
-			method: 'PUT',
+	try {
+		const content = await file.arrayBuffer();
+		const buffer = Buffer.from(content);
+
+		const response = await axios.put(url, buffer, {
 			headers: {
 				'Content-Type': 'multipart/form-data',
 				'Content-Length': file.size
 			}
-		};
-
-		const req = https.request(url, options, (res) => {
-			console.log(`Response from S3 status code: ${res.statusCode}`);
 		});
 
-		req.on('error', (error) => {
-			console.error(error);
-			reject(error);
-		});
-
-		try {
-			file
-				.arrayBuffer()
-				.then((content) => {
-					const buffer = Buffer.from(content);
-					//console.log(buffer); image contents
-					req.write(buffer);
-					req.end();
-				})
-				.catch((error) => {
-					console.error(error);
-					reject(error);
-				});
+		console.log(`Response from S3 status code: ${response.status}`);
 			console.log('Upload to S3 is Done. Check your S3 console.');
-			resolve();
 		} catch (error) {
 			console.error(error);
-			reject(error);
+		throw error;
 		}
-	});
 }
