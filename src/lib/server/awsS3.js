@@ -117,9 +117,9 @@ async function put(url, file) {
 		});
 
 		console.log(`Response from S3 status code: ${response.status}`);
-			console.log('Upload to S3 is Done. Check your S3 console.');
-		} catch (error) {
-			console.error(error);
+		console.log('Upload to S3 is Done. Check your S3 console.');
+	} catch (error) {
+		console.error(error);
 		throw error;
-		}
+	}
 }
